@@ -1038,8 +1038,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 			this.frozenBeanDefinitionNames = null;
 		}
-
+		// 检查是否有同名的 BeanDefinition 已经在 IOC 容器中注册
 		if (existingDefinition != null || containsSingleton(beanName)) {
+			// 尝试重置所有已注册过的 BeanDefinition 的缓存，包括 BeanDefinition 的父类以及合并的 BeanDefinition。
+			// 所谓的合并 BeanDefinition 指的是有 parent 属性的 BeanDefinition，该 BeanDefinition 会把 parent 的 BeanDefinition 属性合并在一块
 			resetBeanDefinition(beanName);
 		}
 		else if (isConfigurationFrozen()) {

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.core.io.ResourceLoader</OriginalElement>
+  <nodes>
+    <node x="0.0" y="172.0">org.springframework.core.io.support.PathMatchingResourcePatternResolver</node>
+    <node x="450.25" y="0.0">org.springframework.core.io.ResourceLoader</node>
+    <node x="526.375" y="344.0">org.springframework.context.support.AbstractApplicationContext</node>
+    <node x="653.625" y="86.0">org.springframework.core.io.DefaultResourceLoader</node>
+    <node x="387.0" y="258.0">org.springframework.context.ConfigurableApplicationContext</node>
+    <node x="245.75" y="86.0">org.springframework.core.io.support.ResourcePatternResolver</node>
+    <node x="453.0" y="172.0">org.springframework.context.ApplicationContext</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.context.ConfigurableApplicationContext" target="org.springframework.context.ApplicationContext">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.core.io.support.ResourcePatternResolver" target="org.springframework.core.io.ResourceLoader">
+      <point x="0.0" y="-18.0" />
+      <point x="396.25" y="61.0" />
+      <point x="500.75" y="61.0" />
+      <point x="-50.5" y="18.0" />
+    </edge>
+    <edge source="org.springframework.core.io.support.PathMatchingResourcePatternResolver" target="org.springframework.core.io.support.ResourcePatternResolver">
+      <point x="0.0" y="-18.0" />
+      <point x="216.5" y="147.0" />
+      <point x="321.0" y="147.0" />
+      <point x="-75.25" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.support.AbstractApplicationContext" target="org.springframework.core.io.DefaultResourceLoader">
+      <point x="83.5" y="-18.0" />
+      <point x="776.875" y="319.0" />
+      <point x="793.125" y="319.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.ApplicationContext" target="org.springframework.core.io.support.ResourcePatternResolver">
+      <point x="0.0" y="-18.0" />
+      <point x="576.0" y="147.0" />
+      <point x="471.5" y="147.0" />
+      <point x="75.25" y="18.0" />
+    </edge>
+    <edge source="org.springframework.core.io.DefaultResourceLoader" target="org.springframework.core.io.ResourceLoader">
+      <point x="0.0" y="-18.0" />
+      <point x="793.125" y="61.0" />
+      <point x="601.75" y="61.0" />
+      <point x="50.5" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.support.AbstractApplicationContext" target="org.springframework.context.ConfigurableApplicationContext">
+      <point x="-83.5" y="-18.0" />
+      <point x="609.875" y="319.0" />
+      <point x="576.0" y="319.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="466.5" y="190.0" />
+  <SelectedNodes>
+    <node>org.springframework.core.io.ResourceLoader</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

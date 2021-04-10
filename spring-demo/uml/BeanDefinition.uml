@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.beans.factory.config.BeanDefinition</OriginalElement>
+  <nodes>
+    <node x="20.194444444444514" y="258.0">org.springframework.beans.factory.support.RootBeanDefinition</node>
+    <node x="448.28703703703707" y="0.0">org.springframework.beans.BeanMetadataElement</node>
+    <node x="161.44444444444449" y="0.0">org.springframework.core.AttributeAccessor</node>
+    <node x="0.0" y="86.0">org.springframework.core.AttributeAccessorSupport</node>
+    <node x="286.1944444444445" y="258.0">org.springframework.beans.factory.support.ChildBeanDefinition</node>
+    <node x="332.0" y="86.0">org.springframework.beans.factory.config.BeanDefinition</node>
+    <node x="288.0" y="172.0">org.springframework.beans.factory.support.AbstractBeanDefinition</node>
+    <node x="563.1944444444446" y="258.0">org.springframework.beans.factory.support.GenericBeanDefinition</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.beans.factory.support.AbstractBeanDefinition" target="org.springframework.core.AttributeAccessorSupport">
+      <point x="-96.66666666666669" y="-18.0" />
+      <point x="336.3333333333333" y="147.0" />
+      <point x="156.0" y="147.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.AbstractBeanDefinition" target="org.springframework.beans.BeanMetadataElement">
+      <point x="96.66666666666663" y="-18.0" />
+      <point x="529.6666666666666" y="147.0" />
+      <point x="608.9444444444445" y="147.0" />
+      <point x="608.9444444444445" y="61.0" />
+      <point x="641.0370370370371" y="61.0" />
+      <point x="64.25" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.GenericBeanDefinition" target="org.springframework.beans.factory.support.AbstractBeanDefinition">
+      <point x="0.0" y="-18.0" />
+      <point x="702.6944444444446" y="233.0" />
+      <point x="529.6666666666667" y="233.0" />
+      <point x="96.66666666666674" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.AbstractBeanDefinition" target="org.springframework.beans.factory.config.BeanDefinition">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.ChildBeanDefinition" target="org.springframework.beans.factory.support.AbstractBeanDefinition">
+      <point x="0.0" y="-18.0" />
+      <point x="414.6944444444445" y="233.0" />
+      <point x="433.0" y="233.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.config.BeanDefinition" target="org.springframework.core.AttributeAccessor">
+      <point x="-50.5" y="-18.0" />
+      <point x="382.5" y="61.0" />
+      <point x="337.69444444444446" y="61.0" />
+      <point x="58.75" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.RootBeanDefinition" target="org.springframework.beans.factory.support.AbstractBeanDefinition">
+      <point x="0.0" y="-18.0" />
+      <point x="143.1944444444445" y="233.0" />
+      <point x="336.3333333333333" y="233.0" />
+      <point x="-96.66666666666669" y="18.0" />
+    </edge>
+    <edge source="org.springframework.core.AttributeAccessorSupport" target="org.springframework.core.AttributeAccessor">
+      <point x="0.0" y="-18.0" />
+      <point x="156.0" y="61.0" />
+      <point x="220.19444444444449" y="61.0" />
+      <point x="-58.75" y="18.0" />
+    </edge>
+    <edge source="org.springframework.beans.factory.config.BeanDefinition" target="org.springframework.beans.BeanMetadataElement">
+      <point x="50.5" y="-18.0" />
+      <point x="483.5" y="61.0" />
+      <point x="512.5370370370371" y="61.0" />
+      <point x="-64.25" y="18.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="274.5" y="40.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

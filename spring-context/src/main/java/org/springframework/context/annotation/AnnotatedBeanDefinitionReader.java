@@ -251,16 +251,22 @@ public class AnnotatedBeanDefinitionReader {
 			@Nullable BeanDefinitionCustomizer[] customizers) {
 
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
+		// 此段代码用于处理 Conditional 注解，在特定情况下阻断 bean 注解
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
-
+		// 用来创建 bean 的 supplier，会替换掉 bean 本身的创建方法
+		// instanceSupplier 一般情况下为 null
 		abd.setInstanceSupplier(supplier);
+		// 此行代码处理 scope 注解，一般默认值 singleton
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
 		abd.setScope(scopeMetadata.getScopeName());
+		// 获取 beanName
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
-
+		// 特定注解解析，比如 dependsOn、LazyInit 这些注解
+		// 这些注解就和 <Bean> 标签里面的属性作用是一样的
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
+		// qualifiers 就是用来决定接口的实现类的
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				if (Primary.class == qualifier) {
@@ -274,14 +280,18 @@ public class AnnotatedBeanDefinitionReader {
 				}
 			}
 		}
+		// 主要提供对 BeanDefinition 的一些定制化操作
 		if (customizers != null) {
 			for (BeanDefinitionCustomizer customizer : customizers) {
 				customizer.customize(abd);
 			}
 		}
-
+		// 用 BeanDefinitionHolder 包装 BeanDefinition
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
+		// 此行代码与动态代理和 scope 注解有关，主要看看是否依照 spring 的 scope 生成动态代理对象
+		// 否则没有做任何操作，只是返回了传入的 definitionHolder
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+		// 向容器注册扫描到的 Bean
 		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 	}
 

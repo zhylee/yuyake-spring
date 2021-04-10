@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.context.ApplicationListener</OriginalElement>
+  <nodes>
+    <node x="211.0" y="0.0">java.lang.FunctionalInterface</node>
+    <node x="488.0" y="0.0">org.springframework.context.ApplicationEvent</node>
+    <node x="172.5" y="258.0">org.springframework.context.event.GenericApplicationListener</node>
+    <node x="0.0" y="0.0">java.util.EventListener</node>
+    <node x="183.5" y="172.0">org.springframework.context.event.SmartApplicationListener</node>
+    <node x="211.0" y="86.0">org.springframework.context.ApplicationListener</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.context.ApplicationListener" target="java.lang.FunctionalInterface">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.ApplicationListener" target="org.springframework.context.ApplicationEvent">
+      <point x="85.66666666666669" y="-18.0" />
+      <point x="425.1666666666667" y="61.0" />
+      <point x="600.0" y="61.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.event.GenericApplicationListener" target="org.springframework.context.event.SmartApplicationListener">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.ApplicationListener" target="java.util.EventListener">
+      <point x="-85.66666666666669" y="-18.0" />
+      <point x="253.83333333333331" y="61.0" />
+      <point x="95.5" y="61.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+    <edge source="org.springframework.context.event.SmartApplicationListener" target="org.springframework.context.ApplicationListener">
+      <point x="0.0" y="-18.0" />
+      <point x="0.0" y="18.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="356.0" y="61.0" />
+  <SelectedNodes>
+    <node>org.springframework.context.ApplicationListener</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

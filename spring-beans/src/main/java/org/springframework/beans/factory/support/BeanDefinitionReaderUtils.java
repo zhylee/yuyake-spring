@@ -150,6 +150,7 @@ public abstract class BeanDefinitionReaderUtils {
 	}
 
 	/**
+	 * registry 作为参数传入，再在方法里面实行 registry 里的方法，称为委派模式
 	 * Register the given bean definition with the given bean factory.
 	 * @param definitionHolder the bean definition including name and aliases
 	 * @param registry the bean factory to register with
@@ -160,10 +161,12 @@ public abstract class BeanDefinitionReaderUtils {
 			throws BeanDefinitionStoreException {
 
 		// Register bean definition under primary name.
+		// 将 beanDefinition 及其名字注册到容器里
 		String beanName = definitionHolder.getBeanName();
 		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());
 
 		// Register aliases for bean name, if any.
+		// 如果存在别名则逐个注册进容器
 		String[] aliases = definitionHolder.getAliases();
 		if (aliases != null) {
 			for (String alias : aliases) {
