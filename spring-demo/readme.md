@@ -67,7 +67,7 @@ Spring 事件驱动模型：事件驱动模型的三大组成部分
 
 ---
 
-## SpringIoC容器的源码解析
+## SpringIoC 容器的源码解析
 
 - 注解方式启动容器
 - Bean
@@ -105,20 +105,29 @@ Spring 事件驱动模型：事件驱动模型的三大组成部分
 
 ## SpringIoC 容器的初始化
 
-refresh
-
-- prepareRefresh：刷新前的准备工作
-- obtainFreshBeanFactory：获取子类刷新后的内部 beanFactory 实例
-- prepareBeanFactory：为容器注册必要的系统级别 Bean
-- postProcessBeanFactory：允许容器的子类去注册 postProcessor
-- invokeBeanFactoryPostProcessors：调用容器注册的容器级别的后置处理器
-- registerBeanPostProcessors：向容器注册 Bean 级别的后置处理器
-- initMessageSource：初始化国际化配置
-- initApplicationEventMulticaster：初始化事件发布者组件
-- onRefresh：在单例 Bean 初始化之前预留给子类初始化其他特殊 Bean 的口子
-- registerListeners：向前面的事件发布者组件注册事件监听者
-- finishBeanFactoryInitialization：设置系统级别的服务，实例化所有非懒加载的单例
-- finishRefresh：触发初始化完成的回调方法，并发布容器刷新完成的事件给监听者
-- resetCommonCaches：重置 Spring 内核中的共用缓存
+- postProcessor
+    - BeanFactoryPostProcessor // 容器级别的后置处理器
+    - BeanDefinitionRegistryPostProcessor // 关于 Bean Definition 注册的后置处理器
+    - BeanPostProcessor // bean 级别的后置处理器
+- Aware
+- 事件监听器模型
+    - 回调函数
+    - 事件监听的三大组件：事件源、事件、事件监听器
+    - ApplicationEventPublisher // 专门发布事件的
+    - ApplicationEventMulticaster // 拥有事件发布、监听、注册功能的
+- Refresh
+    - prepareRefresh：刷新前的准备工作
+    - obtainFreshBeanFactory：获取子类刷新后的内部 beanFactory 实例
+    - prepareBeanFactory：为容器注册必要的系统级别 Bean
+    - postProcessBeanFactory：允许容器的子类去注册 postProcessor
+    - invokeBeanFactoryPostProcessors：调用容器注册的容器级别的后置处理器
+    - registerBeanPostProcessors：向容器注册 Bean 级别的后置处理器
+    - initMessageSource：初始化国际化配置
+    - initApplicationEventMulticaster：初始化事件发布者组件
+    - onRefresh：在单例 Bean 初始化之前预留给子类初始化其他特殊 Bean 的口子
+    - registerListeners：向前面的事件发布者组件注册事件监听者
+    - finishBeanFactoryInitialization：设置系统级别的服务，实例化所有非懒加载的单例
+    - finishRefresh：触发初始化完成的回调方法，并发布容器刷新完成的事件给监听者
+    - resetCommonCaches：重置 Spring 内核中的共用缓存
 
 ## SpringIoC 容器的依赖注入
