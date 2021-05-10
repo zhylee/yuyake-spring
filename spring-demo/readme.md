@@ -129,5 +129,3 @@ Spring 事件驱动模型：事件驱动模型的三大组成部分
     - finishBeanFactoryInitialization：设置系统级别的服务，实例化所有非懒加载的单例
     - finishRefresh：触发初始化完成的回调方法，并发布容器刷新完成的事件给监听者
     - resetCommonCaches：重置 Spring 内核中的共用缓存
-
-## SpringIoC 容器的依赖注入
