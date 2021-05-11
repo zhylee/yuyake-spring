@@ -75,12 +75,18 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 
 
 	/** Cache of singleton objects: bean name to bean instance. */
+	// 一级缓存：单例对象缓存池，beanName -> Bean，其中存储的就是实例化，属性赋值成功之后的单例对象
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
 	/** Cache of singleton factories: bean name to ObjectFactory. */
+	// 三级缓存：单例工厂的缓存，beanName -> ObjectFactory，添加进去的时候实例还未具备属性
+	// 用于保存 beanName 和创建 bean 的工厂之间的关系 map、单例 Bean 在创建之初过早地暴露出去的 Factory，
+	// 为什么采用工厂方式？是因为有些 Bean 是需要被代理的，总不能把代理前的暴露出去那就毫无意义了
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
 	/** Cache of early singleton objects: bean name to bean instance. */
+	// 二级缓存：早期的单例对象，beanName -> Bean，其中存储的是实例化之后，属性未赋值的单例对象
+	// 执行了工厂方法生产出来的 Bean，bean 被放进去之后，那么当 bean 在创建过程中，就可以通过 getBean 方法获取到
 	private final Map<String, Object> earlySingletonObjects = new ConcurrentHashMap<>(16);
 
 	/** Set of registered singletons, containing the bean names in registration order. */
@@ -179,16 +185,24 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	@Nullable
 	protected Object getSingleton(String beanName, boolean allowEarlyReference) {
 		// Quick check for existing instance without full singleton lock
+		// 尝试从一级缓存里获取完备的 Bean
 		Object singletonObject = this.singletonObjects.get(beanName);
+		// 如果完备的单例还没有创建出来，创建中的 Bean 的名字会被保存在 singletonsCurrentlyInCreation 中
+		// 因此看看是否正在创建
 		if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
 			singletonObject = this.earlySingletonObjects.get(beanName);
+			// 如果没有获取到并且第二个参数为 true，为 true 则表示 bean 允许被循环引用
 			if (singletonObject == null && allowEarlyReference) {
+				// 尝试给一级缓存对象加锁，因为接下来就要对缓存对象进行操作了
 				synchronized (this.singletonObjects) {
 					// Consistent creation of early reference within full singleton lock
 					singletonObject = this.singletonObjects.get(beanName);
 					if (singletonObject == null) {
+						// 尝试从二级缓存 earlySingletonObjects 这个存储还没进行属性添加操作的 Bean 实例缓存中获取
 						singletonObject = this.earlySingletonObjects.get(beanName);
 						if (singletonObject == null) {
+							// 从三级缓存 singletonFactories 这个 ObjectFactory 实例的缓存里
+							// 尝试获取创建此 Bean 的单例工厂实例
 							ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
 							if (singletonFactory != null) {
 								singletonObject = singletonFactory.getObject();
