@@ -249,6 +249,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			if (this.advisedBeans.containsKey(cacheKey)) {
 				return null;
 			}
+			// 1. 有些对象是不可以被代理的，基类：Advices、Advisors、AopInfrastructureBeans，带有 aop 注解的类
+			// 2. 子类可以复写该类，如果一些情况不需要被代理，shouldSkip 返回 true
 			if (isInfrastructureClass(beanClass) || shouldSkip(beanClass, beanName)) {
 				this.advisedBeans.put(cacheKey, Boolean.FALSE);
 				return null;
@@ -258,14 +260,19 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		// Create proxy here if we have a custom TargetSource.
 		// Suppresses unnecessary default instantiation of the target bean:
 		// The TargetSource will handle target instances in a custom fashion.
+		// 获取 targetSource，如果存在则直接在对象初始化之前进行创建代理，避免了目标对象不必要的实例化
 		TargetSource targetSource = getCustomTargetSource(beanClass, beanName);
+		// 如果有自定义 targetSource 就要这里创建代理对象
+		// 这样做的好处是被代理的对象可以动态改变，而不是只针对一个 target 对象（可以对对象池中对象进行代理，可以~）
 		if (targetSource != null) {
 			if (StringUtils.hasLength(beanName)) {
 				this.targetSourcedBeans.add(beanName);
 			}
+			// 获取 Advisors，这个是交给子类实现的
 			Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
 			Object proxy = createProxy(beanClass, beanName, specificInterceptors, targetSource);
 			this.proxyTypes.put(cacheKey, proxy.getClass());
+			// 返回代理的对象
 			return proxy;
 		}
 
