@@ -1,5 +1,6 @@
 package cn.yuyake;
 
+import cn.yuyake.aspects.OutSide;
 import cn.yuyake.controller.HelloController;
 import cn.yuyake.controller.HiController;
 import cn.yuyake.controller.WelcomeController;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
@@ -17,8 +19,17 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  */
 @Configuration
 @EnableAspectJAutoProxy
+@Import(OutSide.class) // import 可以将基础服务类给管理起来
 @ComponentScan("cn.yuyake")
 public class Entrance {
+
+	public static void main(String[] args) {
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Entrance.class);
+		OutSide os1 = applicationContext.getBean(OutSide.class);
+		os1.say();
+		OutSide os2 = (OutSide) applicationContext.getBean("cn.yuyake.aspects.OutSide"); // 这里必须全名才能获取到
+		os2.say();
+	}
 
 	public static void main1(String[] args) {
 		// System.out.println("gek");
@@ -40,7 +51,7 @@ public class Entrance {
 		welcomeController.handleRequest();
 	}
 
-	public static void main(String[] args) {
+	public static void main3(String[] args) {
 		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Entrance.class);
 		System.out.println("================= test about AOP =================");
 		HelloController helloController = applicationContext.getBean(HelloController.class);

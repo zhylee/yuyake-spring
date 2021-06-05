@@ -66,7 +66,19 @@ CGLIB 的优势
 
 - 被代理对象无需实现接口，能实现代理类的无侵入
 
-## SpringAOP 的底层机制
+## Spring AOP 的底层机制
 
 - CGLIB 和 JDK 动态代理共存
 - 默认策略：Bean 实现了接口则用 JDK，否则使用 CGLIB
+
+## 通过注解将类当做 Bean 管理起来的方式
+
+- `@Controller` `@Service` `@Repository` `@Component` 标记的类
+- `@Bean` 标记的方法
+- `@Import` 标签
+
+## Spring AOP 的总体流程
+
+- 注册解析 AOP 的服务
+- 解析和加载横切逻辑
+- 将横切逻辑织入目标 Bean 中

@@ -132,6 +132,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	@Nullable
 	private BeanFactory beanFactory;
 
+	// 当在实例化前置方法 postProcessBeforeInstantiation 中创建了代理类，
+	// 则在 targetSourcedBeans 中添加 beanName
 	private final Set<String> targetSourcedBeans = Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 
 	private final Map<Object, Object> earlyProxyReferences = new ConcurrentHashMap<>(16);
@@ -241,6 +243,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		return wrapIfNecessary(bean, beanName, cacheKey);
 	}
 
+	// 在创建 Bean 的流程中还没调用构造器来实例化 Bean 的时候进行调用（实例化前后）
 	// AOP 解析切面以及事务解析事务注解都是在这里完成的
 	@Override
 	public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
