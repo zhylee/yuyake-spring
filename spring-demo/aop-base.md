@@ -81,4 +81,14 @@ CGLIB 的优势
 
 - 注册解析 AOP 的服务
 - 解析和加载横切逻辑
+    - `createBean`
+    - `postProcessBeforeInstantiation`
+    - `shouldSkip`
+    - `findCandidateAdvisors`
+        - 合并注解和非注解的 advisors
+    - `buildAspectJAdvisors`
+        - 从容器获取所有的 beanName
+        - 遍历 beanName，解析出被 @Aspect 标记的类
+        - 提取 Aspect 类里的 Advisors
+        - 将提取结果加入缓存
 - 将横切逻辑织入目标 Bean 中

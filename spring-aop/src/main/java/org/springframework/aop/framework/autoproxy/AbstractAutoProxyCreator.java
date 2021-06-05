@@ -132,10 +132,12 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	@Nullable
 	private BeanFactory beanFactory;
 
-	// 当在实例化前置方法 postProcessBeforeInstantiation 中创建了代理类，
-	// 则在 targetSourcedBeans 中添加 beanName
+	// 当在实例化前置方法 postProcessBeforeInstantiation 中创建了代理类，则在 targetSourcedBeans 中添加 beanName；
+	// 也就是说 targetSourcedBeans 中含有 beanName 则说明这个类被动态代理了
 	private final Set<String> targetSourcedBeans = Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 
+	// 当 Bean 被循环引用，并且被暴露了，则会通过 getEarlyProxyReference 来创建代理类；
+	// 通过判断 earlyProxyReferences 中是否存在 beanName 来决定是否需要对 target 进行动态代理
 	private final Map<Object, Object> earlyProxyReferences = new ConcurrentHashMap<>(16);
 
 	private final Map<Object, Class<?>> proxyTypes = new ConcurrentHashMap<>(16);
@@ -335,6 +337,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	}
 
 	/**
+	 * Spring 实现 Bean 代理的核心方法。wrapIfNecessary 在两处被调用
+	 * 一处是 getEarlyBeanReference
+	 * 另一处是 postProcessAfterInitialization
 	 * Wrap the given bean if necessary, i.e. if it is eligible for being proxied.
 	 * @param bean the raw bean instance
 	 * @param beanName the name of the bean
