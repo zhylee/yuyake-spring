@@ -70,6 +70,7 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 * @see org.springframework.beans.factory.support.AbstractBeanDefinition#getBeanClass()
 	 * @see org.springframework.beans.factory.support.AbstractBeanDefinition#getFactoryMethodName()
 	 */
+	// 用来在对象实例化前直接返回一个对象（如代理对象）来代替通过内置的实例化流程创建对象
 	@Nullable
 	default Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
 		return null;
@@ -90,6 +91,7 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 * @throws org.springframework.beans.BeansException in case of errors
 	 * @see #postProcessBeforeInstantiation
 	 */
+	// 在对象实例化完毕执行 populateBean 之前，如果返回 false 则 spring 不再对对应的 bean 实例进行自动依赖注入
 	default boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
 		return true;
 	}
@@ -112,6 +114,8 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 * @since 5.1
 	 * @see #postProcessPropertyValues
 	 */
+	// 这里是在 spring 处理完默认的成员属性，应用到指定的 bean 之前进行回调，可以用来检查和修改属性，最终返回的 PropertyValues
+	// @Autowired、@Resource 等就是根据这个回调来实现最终注入依赖的属性的
 	@Nullable
 	default PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName)
 			throws BeansException {

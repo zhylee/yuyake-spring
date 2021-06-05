@@ -241,16 +241,22 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		return wrapIfNecessary(bean, beanName, cacheKey);
 	}
 
+	// AOP 解析切面以及事务解析事务注解都是在这里完成的
 	@Override
 	public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
+		// 获取 BeanClass 的缓存 key
 		Object cacheKey = getCacheKey(beanClass, beanName);
 
 		if (!StringUtils.hasLength(beanName) || !this.targetSourcedBeans.contains(beanName)) {
+			// advisedBeans 保存了所有已经做过动态代理的 Bean
+			// 如果被解析过则直接返回
 			if (this.advisedBeans.containsKey(cacheKey)) {
 				return null;
 			}
 			// 1. 有些对象是不可以被代理的，基类：Advices、Advisors、AopInfrastructureBeans，带有 aop 注解的类
+			//     - 判断当前 bean 是否是基础类型：是否实现了 Advice、Pointcut、Advisor、AopInfrastructureBean 这些
 			// 2. 子类可以复写该类，如果一些情况不需要被代理，shouldSkip 返回 true
+			//     - 判断是不是应该跳过（AOP 解析直接解析出我们的切面信息，而事务在这里是不会解析的）
 			if (isInfrastructureClass(beanClass) || shouldSkip(beanClass, beanName)) {
 				this.advisedBeans.put(cacheKey, Boolean.FALSE);
 				return null;
@@ -260,10 +266,10 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		// Create proxy here if we have a custom TargetSource.
 		// Suppresses unnecessary default instantiation of the target bean:
 		// The TargetSource will handle target instances in a custom fashion.
-		// 获取 targetSource，如果存在则直接在对象初始化之前进行创建代理，避免了目标对象不必要的实例化
+		// 获取用户自定义的 targetSource，如果存在则直接在对象初始化之前进行创建代理，避免了目标对象不必要的实例化
 		TargetSource targetSource = getCustomTargetSource(beanClass, beanName);
 		// 如果有自定义 targetSource 就要这里创建代理对象
-		// 这样做的好处是被代理的对象可以动态改变，而不是只针对一个 target 对象（可以对对象池中对象进行代理，可以~）
+		// 这样做的好处是被代理的对象可以动态改变，而不是只针对一个 target 对象（可以对对象池中对象进行代理）
 		if (targetSource != null) {
 			if (StringUtils.hasLength(beanName)) {
 				this.targetSourcedBeans.add(beanName);
@@ -293,7 +299,10 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	public Object postProcessAfterInitialization(@Nullable Object bean, String beanName) {
 		if (bean != null) {
 			Object cacheKey = getCacheKey(bean.getClass(), beanName);
+			// 当 Bean 被循环引用，并且被暴露了，则会通过 getEarlyBeanReference 来创建代理类；
+			// 通过判断 earlyProxyReferences 中是否存在 beanName 来决定是否需要对 target 进行动态代理
 			if (this.earlyProxyReferences.remove(cacheKey) != bean) {
+				// 该方法将会返回代理类
 				return wrapIfNecessary(bean, beanName, cacheKey);
 			}
 		}

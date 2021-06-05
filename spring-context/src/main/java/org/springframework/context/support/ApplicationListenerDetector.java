@@ -92,6 +92,8 @@ class ApplicationListenerDetector implements DestructionAwareBeanPostProcessor, 
 		return bean;
 	}
 
+	// ApplicationListenerDetector 是用来注册 ApplicationListener 实例的，而如果销毁一个 Listener 对象，不解除这里的应用的话
+	// 会导致无法进行回收，因此在销毁对象时，会判断如果是ApplicationListener则要从监听器列表中移除掉
 	@Override
 	public void postProcessBeforeDestruction(Object bean, String beanName) {
 		if (bean instanceof ApplicationListener) {
