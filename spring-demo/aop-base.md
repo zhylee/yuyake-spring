@@ -77,6 +77,17 @@ CGLIB 的优势
 - `@Bean` 标记的方法
 - `@Import` 标签
 
+## 代理生成阶段
+
+![proxy](./img/proxy.png)
+
+## AbstractAutoProxyCreator
+
+横切逻辑织入的入口方法
+
+- `postProcessAfterInitialization`：正常流程的织入入口
+- `getEarlyBeanReference`：循环依赖的织入入口
+
 ## Spring AOP 的总体流程
 
 - 注册解析 AOP 的服务
@@ -92,3 +103,19 @@ CGLIB 的优势
         - 提取 Aspect 类里的 Advisors
         - 将提取结果加入缓存
 - 将横切逻辑织入目标 Bean 中
+
+## Spring AOP 的脉络分析
+
+- Bean 级别的后置处理器的执行时机分析
+    - SmartInstantiationAwareBeanPostProcessor 及其父类
+    - AbstractAutoProxyCreator
+- AnnotationAwareAspectJAutoProxyCreator 的注册
+    - @Import
+    - BeanDefinitionRegistry.postProcessBeanDefinitionRegistry
+- 将切面逻辑解析成一个个 advisor 实例
+    - InstantiationAwareBeanPostProcessor.postProcessBeforeInstantiation
+    - @Aspect 的解析和加载
+- 针对每个 Bean 筛选出匹配的 advisors 并创建动态代理
+    - CGlib 或 JDK 动态代理
+    - BeanPostProcessor.postProcessAfterInitialization
+- 通过调用链按序递归执行被代理的方法
